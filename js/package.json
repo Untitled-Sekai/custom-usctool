@@ -1,7 +1,8 @@
 {
-  "name": "js",
-  "version": "1.0.0",
-  "description": "",
+  "name": "usctool",
+  "scope": "sevenc-nanashi",
+  "version": "0.0.0",
+  "description": "A tool for working with USCs",
   "scripts": {
     "test": "jest",
     "lint": "eslint . --ext .mts,.js,.ts",
@@ -9,9 +10,17 @@
     "build:lib": "tsc",
     "build:bin": "node ./build.js"
   },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Nanashi.",
+    "url": "https://sevenc7c.com"
+  },
+  "license": "MIT",
   "devDependencies": {
     "@swc/core": "^1.3.101",
     "@tsconfig/node18": "^18.2.2",

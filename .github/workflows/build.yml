@@ -1,0 +1,70 @@
+name: Build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        run: |
+          rustup install stable
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Modify Version
+        working-directory: ./js
+        run: |
+          npm version ${{ github.ref_name }}
+          sed -i "s/version = \".*\"/version = \"${{ github.ref_name }}\"/g" Cargo.toml
+
+      - name: Install dependencies
+        working-directory: ./js
+        run: pnpm install
+
+      - name: Build JS
+        working-directory: ./js
+        run: |
+          pnpm build:lib
+          pnpm build:bin
+
+      - name: Build Rust
+        run: |
+          cargo build --release
+
+      - name: Publish JS
+        working-directory: ./js
+        run: |
+          npm publish --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Prepare dlls
+        run: |
+          mkdir tmp
+          cp target/release/*.dll tmp
+          cp target/release/*.exe tmp
+          cp target/usctool.h tmp
+
+      - name: Push to build branch
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            tmp/*
+          tag_name: ${{ github.ref_name }}
