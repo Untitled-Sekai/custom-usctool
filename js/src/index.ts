@@ -51,3 +51,4 @@ export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
 }
 
 export { susToUSC, chsToUSC, mmwsToUSC, migrateVUSC, currentVersion }
+export * from "./usc"
