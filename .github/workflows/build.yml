@@ -50,6 +50,14 @@ jobs:
           pnpm build:lib
           pnpm build:bin
 
+      - name: Cache target
+        uses: actions/cache@v4
+        with:
+          path: target
+          key: ${{ runner.os }}-rust-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-rust-
+
       - name: Build Rust
         run: |
           cargo build --release
