@@ -34,10 +34,10 @@ jobs:
           cache-dependency-path: "./js/pnpm-lock.yaml"
 
       - name: Modify Version
-        working-directory: ./js
         run: |
-          npm version ${{ github.ref_name }}
           sed -i "s/version = \".*\"/version = \"${{ github.ref_name }}\"/g" Cargo.toml
+          cd js
+          npm version ${{ github.ref_name }}
 
       - name: Install dependencies
         working-directory: ./js
