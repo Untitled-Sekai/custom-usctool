@@ -65,6 +65,7 @@ jobs:
       - name: Publish JS
         working-directory: ./js
         run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
           npm publish --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -72,7 +73,7 @@ jobs:
       - name: Prepare dlls
         run: |
           mkdir tmp
-          cp target/release/*.dll tmp
+          cp target/release/usctool_cdylib.dll tmp/usctool.dll
           cp target/release/*.exe tmp
           cp target/usctool.h tmp
 
