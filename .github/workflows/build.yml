@@ -35,7 +35,8 @@ jobs:
 
       - name: Modify Version
         run: |
-          sed -i "s/^version = \".*\"/version = \"${{ github.ref_name }}\"/g" Cargo.toml
+          VERSION=$(echo ${{ github.ref_name }} | sed -e "s/^v//")
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" Cargo.toml
           cd js
           npm version ${{ github.ref_name }}
 
