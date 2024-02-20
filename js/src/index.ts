@@ -3,7 +3,7 @@ import { chsToUSC } from "~/chs/convert"
 import { mmwsToUSC } from "~/mmws/convert"
 import { migrateVUSC, currentVersion } from "~/usc/migrate"
 import { USC } from "./usc"
-import { TextDecoder } from "text-encoding"
+import { TextDecoder } from "@sinonjs/text-encoding"
 
 function checkHeader(buffer: Uint8Array, header: number[]): boolean {
   for (let i = 0; i < header.length; i++) {

@@ -11,7 +11,8 @@
       "~/*": ["./src/*"]
     },
     "outDir": "./dist",
-    "declaration": true
+    "declaration": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
   "exclude": ["src/__tests__/**/*", "src/bin/**/*"]
 }
