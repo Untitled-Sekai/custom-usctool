@@ -21,12 +21,14 @@ impl Serialize for Usc {
 }
 
 impl Usc {
+    pub const LATEST_VERSION: u32 = 2;
     pub fn from_any(data: &[u8]) -> Result<(usc::FileFormat, Usc)> {
         let data = js_bridge::convert(js_bridge::Format::Auto, data).map_err(Error::Convert)?;
         let format = match data.format {
             js_bridge::Format::Sus => usc::FileFormat::Sus,
             js_bridge::Format::Chs => usc::FileFormat::Chs,
             js_bridge::Format::Mmws => usc::FileFormat::Mmws,
+            js_bridge::Format::Ccmmws => usc::FileFormat::Ccmmws,
             js_bridge::Format::Vusc => usc::FileFormat::Vusc,
             js_bridge::Format::Auto => unreachable!(),
         };
@@ -62,14 +64,14 @@ impl Usc {
         Ok(usc)
     }
 
-    pub fn to_vusc(&self, version: Option<i32>) -> Result<String> {
+    pub fn to_vusc(&self, version: Option<u32>) -> Result<String> {
         let data = match version {
             Some(version) => json!({
                 "version": version,
                 "usc": js_bridge::migrate(serde_json::to_value(&self.data).unwrap(), version).unwrap(),
             }),
             None => json!({
-                "version": 2,
+                "version": Usc::LATEST_VERSION,
                 "usc": &self.data,
             }),
         };

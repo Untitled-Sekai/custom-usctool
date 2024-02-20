@@ -11,6 +11,6 @@ name = "usctool"
 path = "src/main.rs"
 
 [dependencies]
-anyhow = "1.0.77"
-clap = { version = "4.4.11", features = ["derive"] }
+anyhow.workspace = true
+clap.workspace = true
 usctool.workspace = true

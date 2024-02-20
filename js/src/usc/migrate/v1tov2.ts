@@ -1,8 +1,4 @@
-import {
-  USC as USC1,
-  USCConnectionStartNote,
-  USCSlideNote,
-} from "~/usc/types/v1"
+import { USC as USC1, USCSlideNote } from "~/usc/types/v1"
 import { USC as USC2 } from "~/usc/types/v2"
 
 export function forward(data: USC1): USC2 {

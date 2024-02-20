@@ -1,7 +1,7 @@
 use anyhow::Result;
 use usctool::Usc;
 
-pub fn migrate(input: &str, output: &str, version: Option<i32>) -> Result<()> {
+pub fn migrate(input: &str, output: &str, version: Option<u32>) -> Result<()> {
     let data = crate::common::read(input)?;
     let usc = Usc::from_any(&data)?.1;
     let data = usc.to_vusc(version)?;

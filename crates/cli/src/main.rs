@@ -24,7 +24,7 @@ enum Commands {
         format: Option<FileFormat>,
         /// Version of VUSC to convert to, defaults to latest
         #[clap(long, short)]
-        target: Option<i32>,
+        target: Option<u32>,
     },
     /// Migrate VUSC file to a different version
     Migrate {
@@ -34,7 +34,7 @@ enum Commands {
         output: String,
         /// Version of VUSC to migrate to, defaults to latest
         #[clap(long, short)]
-        target: Option<i32>,
+        target: Option<u32>,
     },
     /// Detect the format of a file
     Detect {
@@ -56,7 +56,7 @@ fn main() {
         Commands::Migrate {
             path,
             output,
-            target
+            target,
         } => commands::migrate(path, output, *target),
         Commands::Detect { path } => commands::detect(path),
     };

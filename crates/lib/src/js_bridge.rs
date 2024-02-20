@@ -15,13 +15,14 @@ pub enum Format {
     Sus,
     Chs,
     Mmws,
+    Ccmmws,
     Vusc,
 }
 #[derive(Debug, Serialize)]
 #[serde(tag = "command", content = "payload", rename_all = "camelCase")]
 pub enum Command {
     Convert { format: Format, data: String },
-    Migrate { data: Value, to: i32 },
+    Migrate { data: Value, to: u32 },
 }
 
 #[derive(Debug, Deserialize)]
@@ -65,7 +66,7 @@ pub fn convert(format: Format, data: &[u8]) -> Result<ConvertResult> {
     result.into()
 }
 
-pub fn migrate(data: Value, to: i32) -> Result<Value> {
+pub fn migrate(data: Value, to: u32) -> Result<Value> {
     let command = Command::Migrate { data, to };
     let result: JsResult<Value> = serde_json::from_str(&call_js(command)).unwrap();
     result.into()

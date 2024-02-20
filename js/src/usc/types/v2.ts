@@ -88,6 +88,7 @@ export const USCColor = {
   yellow: 4,
   purple: 5,
   cyan: 6,
+  black: 7,
 }
 export type USCColor = keyof typeof USCColor
 

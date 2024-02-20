@@ -14,15 +14,18 @@ function checkHeader(buffer: Uint8Array, header: number[]): boolean {
   return true
 }
 
-export type Format = "sus" | "chs" | "mmws" | "vusc"
+export type Format = "sus" | "chs" | "mmws" | "ccmmws" | "vusc"
 
 export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
   const header = buffer.slice(0, 6)
   if (
-    checkHeader(header, [0x4d, 0x4d, 0x57, 0x53]) || // MMWS
-    checkHeader(header, [0x43, 0x43, 0x4d, 0x4d, 0x57, 0x53]) // CCMMWS
+    checkHeader(header, [0x4d, 0x4d, 0x57, 0x53]) // MMWS
   ) {
     return { format: "mmws", usc: mmwsToUSC(buffer) }
+  } else if (
+    checkHeader(header, [0x43, 0x43, 0x4d, 0x57, 0x53]) // CCMMWS
+  ) {
+    return { format: "ccmmws", usc: mmwsToUSC(buffer) }
   } else if (checkHeader(header, [0x1f, 0x8b])) {
     // GZip, chs
     return { format: "chs", usc: chsToUSC(buffer) }
