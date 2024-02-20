@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "types": ["node", "jest"],
+    "lib": ["es2018", "dom"],
+    "esModuleInterop": true,
+    "rootDir": "src",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "outDir": "./dist"
+  },
+  "exclude": ["src/__tests__/**/*", "src/bin/**/*"]
+}
