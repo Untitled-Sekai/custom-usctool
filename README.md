@@ -8,7 +8,7 @@ JS ライブラリ、CLI ツール、dll ライブラリの 3 つの形態で提
 ### JS ライブラリ
 
 ```bash
-npm install sevenc-nanashi/usctool#js-build
+npm install usctool
 ```
 
 ### CLI ツール / dll ライブラリ
