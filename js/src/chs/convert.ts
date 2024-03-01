@@ -219,4 +219,5 @@ const analyze = (chs: Uint8Array): Score => {
   }
 }
 
+/** Convert the CHS to the USC */
 export const chsToUSC = (chs: Uint8Array): USC => chsLikeToUSC(analyze(chs))

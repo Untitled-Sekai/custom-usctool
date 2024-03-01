@@ -10,6 +10,7 @@ import {
 } from "../usc"
 import { NoteObject, Score, analyze } from "./analyze"
 
+/** Convert a SUS to a USC */
 export const susToUSC = (sus: string): USC => chsLikeToUSC(analyze(sus))
 
 export const chsLikeToUSC = (score: Score): USC => {

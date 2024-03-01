@@ -28,6 +28,9 @@ const laneToUSCLane = ({
   return lane - 6 + width / 2
 }
 
+/**
+ * Convert MMWS or CCMMWS to a USC
+ */
 export const mmwsToUSC = (mmws: Uint8Array): USC => {
   const score = analyze(mmws)
   const usc: USC = {
@@ -167,3 +170,8 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
 
   return usc
 }
+
+/**
+ * Convert CCMMWS to a USC
+ */
+export const ccmmwsToUSC = mmwsToUSC

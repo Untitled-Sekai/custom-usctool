@@ -2,6 +2,9 @@ import { USC as USC1 } from "../types/v1"
 import { USC as USC2 } from "../types/v2"
 import * as v1tov2 from "./v1tov2"
 
+/**
+ * The USC with versioning information
+ */
 export type VersionedUSC =
   | {
       version: 1
@@ -13,7 +16,15 @@ export type VersionedUSC =
     }
 type USC = USC2
 
+/** The current version of the USC */
 export const currentVersion = 2
+/**
+ * Migrate the USC to the specified version
+ * @param data The USC with versioning information
+ * @param to The version to migrate to
+ * @returns The USC with the specified version
+ * @throws If the version is unknown
+ */
 export function migrateVUSC(
   data: VersionedUSC,
   {

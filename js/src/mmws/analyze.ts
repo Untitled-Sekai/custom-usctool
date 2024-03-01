@@ -123,6 +123,8 @@ export const analyze = (mmws: Uint8Array): Score => {
   const tapsPointer = buffer.readUInt32LE()
   const holdsPointer = buffer.readUInt32LE()
   const damagesPointer = cyanvasVersion > 0 ? buffer.readUInt32LE() : 0
+  // const layersPointer = cyanvasVersion >= 4 ? buffer.readUInt32LE() : 0
+  // const waypointsPointer = cyanvasVersion >= 5 ? buffer.readUInt32LE() : 0
 
   buffer.seek(metadataPointer)
   const metadata = {

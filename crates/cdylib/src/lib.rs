@@ -21,9 +21,11 @@ fn run(f: impl FnOnce() -> Result<String, anyhow::Error>) -> *const c_char {
     }
 }
 
-/// バージョンを返す。
+/// Returns the version of the library.
 ///
-/// ポインタは `usctool_free` で解放する必要がある。
+/// # Safety
+///
+/// The returned pointer must be freed with `usctool_free`.
 #[no_mangle]
 extern "C" fn usctool_version() -> *const c_char {
     let version = env!("CARGO_PKG_VERSION");
@@ -33,20 +35,20 @@ extern "C" fn usctool_version() -> *const c_char {
     }
 }
 
-/// メモリを解放する。
+/// Frees the memory allocated by the library.
 ///
-/// 成功した場合は `true` を返す。
+/// Returns `true` if the memory was freed successfully, otherwise `false`.
 #[no_mangle]
 extern "C" fn usctool_free(ptr: *const c_char) -> bool {
     let mut cstring_manager = strings::STRINGS_MANAGER.lock().unwrap();
     cstring_manager.free(ptr)
 }
 
-/// 変換元のファイルの種類。
+/// The file format of the input file.
 #[repr(C)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UsctoolFileFormat {
-    /// 自動判別
+    /// Auto-detect the file format.
     UsctoolFileFormatAuto = 0,
     /// Sliding Universal Score。
     UsctoolFileFormatSus = 1,
@@ -58,18 +60,18 @@ pub enum UsctoolFileFormat {
     UsctoolFileFormatCcmmws = 4,
 }
 
-/// ファイルをVUSCに変換する。
+/// Converts the input file to VUSC.
 ///
-/// 成功した場合はNull-terminatedの文字列へのポインタを返す。
-/// ポインタは `usctool_free` で解放する必要がある。
-/// 失敗した場合は `nullptr` を返す。
-/// エラーの詳細は `usctool_last_error` で取得できる。
+/// If successful, it returns a pointer to a Null-terminated string.
+/// The pointer must be freed with `usctool_free`.
+/// If it fails, it returns `nullptr`.
+/// The error can be obtained with `usctool_last_error`.
 ///
 /// # Arguments
 ///
-/// * `input` - 入力ファイルのポインタ。
-/// * `input_len` - 入力ファイルの長さ。
-/// * `format` - 入力ファイルの種類。
+/// * `input` - The pointer to the input file.
+/// * `input_len` - The length of the input file.
+/// * `format` - The file format of the input file.
 #[no_mangle]
 extern "C" fn usctool_convert(
     input: *const u8,
@@ -91,16 +93,16 @@ extern "C" fn usctool_convert(
         Ok(data)
     })
 }
-/// VUSCを他のバージョンに変換する。
+/// Migrate the input VUSC file to the specified version.
 ///
-/// 成功した場合はNull-terminatedの文字列へのポインタを返す。
-/// ポインタは `usctool_free` で解放する必要がある。
-/// 失敗した場合は `nullptr` を返す。
+/// If successful, it returns a pointer to a Null-terminated string.
+/// The pointer must be freed with `usctool_free`.
+/// If it fails, it returns `nullptr`.
 ///
 /// # Arguments
 ///
-/// * `input` - 入力ファイルのポインタ。
-/// * `to` - 変換先のバージョン。
+/// * `input` - The pointer to the input file.
+/// * `to` - The version to migrate to.
 #[no_mangle]
 extern "C" fn usctool_migrate(input: *const u8, to: u32) -> *const c_char {
     let input = unsafe { std::ffi::CStr::from_ptr(input as _).to_bytes() };
@@ -113,15 +115,15 @@ extern "C" fn usctool_migrate(input: *const u8, to: u32) -> *const c_char {
     })
 }
 
-/// ファイルの種類を自動判別する。
+/// Detect the file format of the input file.
 ///
-/// 成功した場合はファイルの種類を返す。
-/// 失敗した場合は `0` を返す。
+/// If successful, it returns the file format.
+/// If it fails, it returns `0`.
 ///
 /// # Arguments
 ///
-/// * `input` - 入力ファイルのポインタ。
-/// * `input_len` - 入力ファイルの長さ。
+/// * `input` - The pointer to the input file.
+/// * `input_len` - The length of the input file.
 #[no_mangle]
 extern "C" fn usctool_detect(input: *const u8, input_len: usize) -> u32 {
     let input = unsafe { std::slice::from_raw_parts(input, input_len) };
@@ -132,7 +134,11 @@ extern "C" fn usctool_detect(input: *const u8, input_len: usize) -> u32 {
     }
 }
 
-/// 最後に発生したエラーを返す。
+/// Returns the last error message.
+///
+/// # Safety
+///
+/// The returned pointer must be freed with `usctool_free`.
 #[no_mangle]
 extern "C" fn usctool_last_error() -> *const c_char {
     LAST_ERROR.with(|last_error| {

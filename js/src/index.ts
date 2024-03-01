@@ -14,8 +14,26 @@ function checkHeader(buffer: Uint8Array, header: number[]): boolean {
   return true
 }
 
+/**
+ * An error for when the file format is unknown
+ */
+export class UnknownFormatError extends Error {
+  constructor() {
+    super("Unknown file format")
+  }
+}
+
+/**
+ * The format of the buffer
+ */
 export type Format = "sus" | "chs" | "mmws" | "ccmmws" | "vusc"
 
+/**
+ * Detects the format of the given buffer and converts it to USC.
+ * @param buffer The buffer to convert
+ * @returns The format and the converted USC
+ * @throws {UnknownFormatError} When the file format is unknown
+ */
 export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
   const header = buffer.slice(0, 6)
   if (
@@ -42,7 +60,7 @@ export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
       if (parsed.version) {
         return { format: "vusc", usc: migrateVUSC(parsed) }
       } else {
-        throw new Error("Unknown file format")
+        throw new UnknownFormatError()
       }
     } catch (e) {
       return { format: "sus", usc: susToUSC(decoded) }

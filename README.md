@@ -1,20 +1,20 @@
 # USCTool
 
-USCTool は、Versioned Universal Sekai Chart を扱うためのツールです。
-JS ライブラリ、CLI ツール、dll ライブラリの 3 つの形態で提供されます。
+USCTool is a library for handling Universal Sekai Chart files.
+This library provides 3 interfaces: JavaScript library, CLI tool, and DLL library.
 
-## インストール
+## Installation
 
-### JS ライブラリ
+### JavaScript Library
 
 ```bash
 npm install usctool
 ```
 
-### CLI ツール / dll ライブラリ
+### CLI Tool / DLL Library
 
-[リリースページ](https://github.com/sevenc-nanashi/usctool/releases/latest) からダウンロードしてください。
+Check the [Releases](https://github.com/sevenc-nanashi/usctool/releases) page.
 
-## ライセンス
+## License
 
-MIT License として提供されます。詳細は [LICENSE](LICENSE) を参照してください。
+This library is licensed under the MIT License.
