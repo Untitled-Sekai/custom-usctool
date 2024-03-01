@@ -1,7 +1,7 @@
-import { susToUSC } from "~/sus/convert"
-import { chsToUSC } from "~/chs/convert"
-import { mmwsToUSC } from "~/mmws/convert"
-import { migrateVUSC, currentVersion } from "~/usc/migrate"
+import { susToUSC } from "./sus/convert"
+import { chsToUSC } from "./chs/convert"
+import { mmwsToUSC } from "./mmws/convert"
+import { migrateVUSC, currentVersion } from "./usc/migrate"
 import { USC } from "./usc"
 import { TextDecoder } from "@sinonjs/text-encoding"
 

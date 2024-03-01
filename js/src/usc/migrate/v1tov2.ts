@@ -1,5 +1,5 @@
-import { USC as USC1, USCSlideNote } from "~/usc/types/v1"
-import { USC as USC2 } from "~/usc/types/v2"
+import { USC as USC1, USCSlideNote } from "../types/v1"
+import { USC as USC2 } from "../types/v2"
 
 export function forward(data: USC1): USC2 {
   const objects: USC2["objects"] = []

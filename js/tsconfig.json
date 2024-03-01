@@ -7,12 +7,10 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "rootDir": "src",
-    "paths": {
-      "~/*": ["./src/*"]
-    },
+    "module": "CommonJS",
     "outDir": "./dist",
     "declaration": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "exclude": ["src/__tests__/**/*", "src/bin/**/*"]
+  "exclude": ["src/__tests__/**/*", "src/bin/**/*", "dist/**/*"]
 }
