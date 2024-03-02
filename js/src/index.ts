@@ -41,7 +41,7 @@ export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
   ) {
     return { format: "mmws", usc: mmwsToUSC(buffer) }
   } else if (
-    checkHeader(header, [0x43, 0x43, 0x4d, 0x57, 0x53]) // CCMMWS
+    checkHeader(header, [0x43, 0x43, 0x4d, 0x4d, 0x57, 0x53]) // CCMMWS
   ) {
     return { format: "ccmmws", usc: mmwsToUSC(buffer) }
   } else if (checkHeader(header, [0x1f, 0x8b])) {

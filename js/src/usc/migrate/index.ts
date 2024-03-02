@@ -33,7 +33,7 @@ export function migrateVUSC(
     to?: 2
   } = {}
 ): USC {
-  let ret: VersionedUSC = JSON.parse(JSON.stringify(data.usc))
+  let ret: VersionedUSC = JSON.parse(JSON.stringify(data))
   while (ret.version < to) {
     switch (ret.version) {
       case 1:
