@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .mts,.js,.ts",
     "lint:fix": "eslint . --ext .mts,.js,.ts --fix",
     "build:lib": "tsc",
-    "build:bin": "node --loader ts-node/esm build.mts"
+    "build:bin": "node build.js"
   },
   "files": [
     "dist"
