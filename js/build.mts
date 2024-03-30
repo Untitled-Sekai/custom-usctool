@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 import esbuild from "esbuild"
 import fs from "fs"
 ;(async () => {
