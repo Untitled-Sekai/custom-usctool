@@ -7,10 +7,10 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "rootDir": "src",
-    "module": "CommonJS",
+    "module": "ES2020",
     "outDir": "./dist",
     "declaration": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"]
   },
-  "exclude": ["src/__tests__/**/*", "src/bin/**/*", "dist/**/*"]
+  "exclude": ["src/__tests__/**/*", "src/bin/**/*", "dist/**/*", "./build.ts"]
 }

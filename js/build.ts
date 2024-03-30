@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const esbuild = require("esbuild")
-const swc = require("@swc/core")
-const fs = require("fs")
+import esbuild from "esbuild"
+import fs from "fs"
 ;(async () => {
   const esbuildResult = await esbuild.build({
     entryPoints: ["src/bin/index.ts"],
