@@ -101,6 +101,7 @@ export type Score = {
 
     layer: number
   }[]
+  numLayers: number
 }
 
 export const analyze = (mmws: Uint8Array): Score => {
@@ -123,7 +124,7 @@ export const analyze = (mmws: Uint8Array): Score => {
   const tapsPointer = buffer.readUInt32LE()
   const holdsPointer = buffer.readUInt32LE()
   const damagesPointer = cyanvasVersion > 0 ? buffer.readUInt32LE() : 0
-  // const layersPointer = cyanvasVersion >= 4 ? buffer.readUInt32LE() : 0
+  const layersPointer = cyanvasVersion >= 4 ? buffer.readUInt32LE() : 0
   // const waypointsPointer = cyanvasVersion >= 5 ? buffer.readUInt32LE() : 0
 
   buffer.seek(metadataPointer)
@@ -316,11 +317,18 @@ export const analyze = (mmws: Uint8Array): Score => {
     damages.sort((a, b) => a.tick - b.tick)
   }
 
+  let numLayers = 1
+  if (cyanvasVersion >= 4) {
+    buffer.seek(layersPointer)
+    numLayers = buffer.readInt32LE()
+  }
+
   return {
     metadata,
     events,
     taps,
     holds,
     damages,
+    numLayers,
   }
 }

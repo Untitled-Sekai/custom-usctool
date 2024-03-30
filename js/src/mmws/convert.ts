@@ -45,19 +45,32 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
       bpm: bpmChange.bpm,
     })
   }
-  usc.objects.push({
-    type: "timeScaleGroup",
-    changes: score.events.hispeedChanges.map((hispeedChange) => ({
+  const tsGroups = new Map<number, { beat: number; timeScale: number }[]>()
+  for (let i = 0; i < score.numLayers; i++) {
+    tsGroups.set(i, [])
+  }
+  for (const hispeedChange of score.events.hispeedChanges) {
+    const key = hispeedChange.layer
+    if (!tsGroups.has(key)) {
+      throw new Error("Invalid layer")
+    }
+    tsGroups.get(key)!.push({
       beat: hispeedChange.tick / ticksPerBeat,
       timeScale: hispeedChange.speed,
-    })),
-  })
+    })
+  }
+  for (const changes of tsGroups.values()) {
+    usc.objects.push({
+      type: "timeScaleGroup",
+      changes,
+    })
+  }
 
   for (const tap of score.taps) {
     const uscTap: USCSingleNote = {
       type: "single",
       beat: tap.tick / ticksPerBeat,
-      timeScaleGroup: 0,
+      timeScaleGroup: tap.layer,
       critical: tap.flags.critical,
       lane: laneToUSCLane(tap),
       size: tap.width / 2,
@@ -72,7 +85,7 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
     const uscStartNote: USCConnectionStartNote = {
       type: "start",
       beat: hold.start.tick / ticksPerBeat,
-      timeScaleGroup: 0,
+      timeScaleGroup: hold.start.layer,
       critical: hold.start.flags.critical,
       ease: mmwsEaseToUSCEase[hold.start.ease],
       lane: laneToUSCLane(hold.start),
@@ -86,7 +99,7 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
     const uscEndNote: USCConnectionEndNote = {
       type: "end",
       beat: hold.end.tick / ticksPerBeat,
-      timeScaleGroup: 0,
+      timeScaleGroup: hold.end.layer,
       critical: hold.end.flags.critical,
       lane: laneToUSCLane(hold.end),
       size: hold.end.width / 2,
@@ -111,7 +124,7 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
           beat: step.tick / ticksPerBeat,
           lane: laneToUSCLane(step),
           size: step.width / 2,
-          timeScaleGroup: 0,
+          timeScaleGroup: step.layer,
           ease: "ease" in step ? mmwsEaseToUSCEase[step.ease] : "linear",
         })),
       }
@@ -131,14 +144,14 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
                 type: "attach",
                 beat,
                 critical: hold.start.flags.critical,
-                timeScaleGroup: 0,
+                timeScaleGroup: step.layer,
               } satisfies USCConnectionAttachNote
             } else {
               const uscStep: USCConnectionTickNote = {
                 type: "tick",
                 beat,
 
-                timeScaleGroup: 0,
+                timeScaleGroup: step.layer,
                 lane,
                 size,
                 ease: mmwsEaseToUSCEase[step.ease],
@@ -161,7 +174,7 @@ export const mmwsToUSC = (mmws: Uint8Array): USC => {
     const uscDamage: USCDamageNote = {
       type: "damage",
       beat: damage.tick / ticksPerBeat,
-      timeScaleGroup: 0,
+      timeScaleGroup: damage.layer,
       lane: laneToUSCLane(damage),
       size: damage.width / 2,
     }
