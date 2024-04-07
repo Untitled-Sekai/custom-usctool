@@ -1,6 +1,6 @@
-import { USC as USC1 } from "../types/v1"
-import { USC as USC2 } from "../types/v2"
-import * as v1tov2 from "./v1tov2"
+import { USC as USC1 } from "../types/v1.js"
+import { USC as USC2 } from "../types/v2.js"
+import * as v1tov2 from "./v1tov2.js"
 
 /**
  * The USC with versioning information

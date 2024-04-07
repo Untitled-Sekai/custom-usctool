@@ -1,9 +1,9 @@
-import { susToUSC } from "./sus/convert"
-import { chsToUSC } from "./chs/convert"
-import { mmwsToUSC } from "./mmws/convert"
-import { migrateVUSC, currentVersion } from "./usc/migrate"
-import { USC } from "./usc"
-import { TextDecoder } from "@sinonjs/text-encoding"
+import { susToUSC } from "./sus/convert.js"
+import { chsToUSC } from "./chs/convert.js"
+import { mmwsToUSC } from "./mmws/convert.js"
+import { migrateVUSC, currentVersion } from "./usc/migrate/index.js"
+import { USC } from "./usc/index.js"
+import { TextDecoder } from "fastestsmallesttextencoderdecoder"
 
 function checkHeader(buffer: Uint8Array, header: number[]): boolean {
   for (let i = 0; i < header.length; i++) {
@@ -69,4 +69,4 @@ export function anyToUSC(buffer: Uint8Array): { format: Format; usc: USC } {
 }
 
 export { susToUSC, chsToUSC, mmwsToUSC, migrateVUSC, currentVersion }
-export * from "./usc"
+export * from "./usc/index.js"

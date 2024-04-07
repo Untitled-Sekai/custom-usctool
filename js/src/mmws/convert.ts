@@ -9,8 +9,8 @@ import {
   USCGuideNote,
   USCSingleNote,
   USCSlideNote,
-} from "../usc"
-import { analyze } from "./analyze"
+} from "../usc/index.js"
+import { analyze } from "./analyze.js"
 
 const mmwsEaseToUSCEase = {
   linear: "linear",

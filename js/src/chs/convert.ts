@@ -1,7 +1,7 @@
-import { Score } from "../sus/analyze"
-import { chsLikeToUSC } from "../sus/convert"
-import { USC } from "../usc/index"
-import { Chs2, Chs3, SusExportPluginOption } from "./typing/index"
+import { Score } from "../sus/analyze.js"
+import { chsLikeToUSC } from "../sus/convert.js"
+import { USC } from "../usc/index.js"
+import { Chs2, Chs3, SusExportPluginOption } from "./typing/index.js"
 import pako from "pako"
 
 const tapLikeNotes = ["taps", "exTaps", "flicks", "damages"] as const

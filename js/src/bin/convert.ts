@@ -1,5 +1,6 @@
 import { Format, anyToUSC, chsToUSC, mmwsToUSC, susToUSC } from ".."
 import { toByteArray } from "base64-js"
+import { TextDecoder } from "fastestsmallesttextencoderdecoder"
 
 type Payload = {
   format: Format | "auto"
@@ -16,11 +17,14 @@ export function run(payload: Payload) {
   switch (format) {
     case "auto":
       return anyToUSC(data)
-    case "sus":
+    case "sus": {
+      const decoder = new TextDecoder()
+      const decoded = decoder.decode(data)
       return {
         format: "sus",
-        data: susToUSC(data),
+        data: susToUSC(decoded),
       }
+    }
     case "chs":
       return {
         format: "chs",

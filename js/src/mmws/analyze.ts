@@ -1,4 +1,4 @@
-import BinReader from "./binreader"
+import BinarySeeker from "@sevenc-nanashi/binaryseeker"
 
 const FlickType = ["none", "up", "left", "right"] as const
 type FlickType = (typeof FlickType)[number]
@@ -105,7 +105,7 @@ export type Score = {
 }
 
 export const analyze = (mmws: Uint8Array): Score => {
-  const buffer = new BinReader(mmws.buffer)
+  const buffer = new BinarySeeker(mmws.buffer)
   const header = buffer.readString()
   if (header !== "MMWS" && header !== "CCMMWS") {
     throw new Error("Invalid MMWS file")
@@ -133,7 +133,7 @@ export const analyze = (mmws: Uint8Array): Score => {
     author: buffer.readString(),
     artist: buffer.readString(),
     musicFile: buffer.readString(),
-    musicOffset: buffer.readFloatLE(),
+    musicOffset: buffer.readFloat32LE(),
     jacketFile: buffer.readString(),
   }
 
@@ -160,14 +160,14 @@ export const analyze = (mmws: Uint8Array): Score => {
   for (let i = 0; i < bpmChangesCount; i++) {
     events.bpmChanges.push({
       tick: buffer.readInt32LE(),
-      bpm: buffer.readFloatLE(),
+      bpm: buffer.readFloat32LE(),
     })
   }
   const hispeedChangesCount = buffer.readInt32LE()
   for (let i = 0; i < hispeedChangesCount; i++) {
     events.hispeedChanges.push({
       tick: buffer.readInt32LE(),
-      speed: buffer.readFloatLE(),
+      speed: buffer.readFloat32LE(),
       layer: cyanvasVersion >= 4 ? buffer.readInt32LE() : 0,
     })
   }
