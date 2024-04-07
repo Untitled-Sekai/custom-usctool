@@ -1,6 +1,5 @@
 import { Format, anyToUSC, chsToUSC, mmwsToUSC, susToUSC } from ".."
 import { toByteArray } from "base64-js"
-import { TextDecoder } from "fastestsmallesttextencoderdecoder"
 
 type Payload = {
   format: Format | "auto"
