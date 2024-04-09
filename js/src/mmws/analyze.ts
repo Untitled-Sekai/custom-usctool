@@ -4,8 +4,14 @@ const FlickType = ["none", "up", "left", "right"] as const
 type FlickType = (typeof FlickType)[number]
 const StepType = ["visible", "hidden", "ignored"] as const
 type StepType = (typeof StepType)[number]
-const EaseType = ["linear", "easeIn", "easeOut"] as const
-type EaseType = (typeof EaseType)[number]
+const EaseType = [
+  "linear",
+  "easeIn",
+  "easeOut",
+  "easeInOut",
+  "easeOutIn",
+] as const
+export type EaseType = (typeof EaseType)[number]
 
 export type Score = {
   metadata: {
@@ -227,8 +233,8 @@ export const analyze = (mmws: Uint8Array): Score => {
       const width = buffer.readInt32LE()
       const layer = cyanvasVersion >= 4 ? buffer.readInt32LE() : 0
       buffer.readInt32LE() // unused flags
-      const type = StepType[buffer.readInt32LE() as 0 | 1 | 2]
-      const ease = EaseType[buffer.readInt32LE() as 0 | 1 | 2]
+      const type = StepType[buffer.readInt32LE()]
+      const ease = EaseType[buffer.readInt32LE()]
       steps.push({
         tick,
         lane,

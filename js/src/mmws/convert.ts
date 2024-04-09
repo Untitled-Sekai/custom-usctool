@@ -10,13 +10,15 @@ import {
   USCSingleNote,
   USCSlideNote,
 } from "../usc/index.js"
-import { analyze } from "./analyze.js"
+import { EaseType, analyze } from "./analyze.js"
 
 const mmwsEaseToUSCEase = {
   linear: "linear",
   easeOut: "out",
   easeIn: "in",
-} as const
+  easeInOut: "inOut",
+  easeOutIn: "outIn",
+} as const satisfies Record<EaseType, string>
 const ticksPerBeat = 480
 const laneToUSCLane = ({
   lane,

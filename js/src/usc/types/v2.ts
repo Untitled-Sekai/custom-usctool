@@ -48,14 +48,14 @@ export type USCDamageNote = BaseUSCNote & {
 export type USCConnectionStartNote = BaseUSCNote & {
   type: "start"
   critical: boolean
-  ease: "out" | "linear" | "in"
+  ease: "out" | "linear" | "in" | "inOut" | "outIn"
   judgeType: "normal" | "trace" | "none"
 }
 
 export type USCConnectionTickNote = BaseUSCNote & {
   type: "tick"
   critical?: boolean
-  ease: "out" | "linear" | "in"
+  ease: "out" | "linear" | "in" | "inOut" | "outIn"
 }
 
 export type USCConnectionAttachNote = Omit<BaseUSCObject, "timeScaleGroup"> & {
@@ -93,7 +93,7 @@ export const USCColor = {
 export type USCColor = keyof typeof USCColor
 
 export type USCGuideMidpointNote = BaseUSCNote & {
-  ease: "out" | "linear" | "in"
+  ease: "out" | "linear" | "in" | "inOut" | "outIn"
 }
 
 export const USCFade = {
