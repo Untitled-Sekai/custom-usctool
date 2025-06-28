@@ -14,10 +14,12 @@ export type VersionedUSC =
       version: 2
       usc: USC2
     }
+
 type USC = USC2
 
 /** The current version of the USC */
 export const currentVersion = 2
+
 /**
  * Migrate the USC to the specified version
  * @param data The USC with versioning information

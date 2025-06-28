@@ -8,12 +8,12 @@ JS ライブラリ、CLI ツール、dll ライブラリの 3 つの形態で提
 ### JS ライブラリ
 
 ```bash
-npm install usctool
+npm install custom-usctool
 ```
 
 ### CLI ツール / dll ライブラリ
 
-[リリースページ](https://github.com/sevenc-nanashi/usctool/releases/latest) からダウンロードしてください。
+[リリースページ](https://github.com/Untitled-Sekai/custom-usctool/releases) からダウンロードしてください。
 
 ## ライセンス
 

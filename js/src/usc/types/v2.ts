@@ -10,6 +10,7 @@ export type USCObject =
   | USCSlideNote
   | USCGuideNote
   | USCDamageNote
+  | USCStageGroup
 
 type BaseUSCObject = {
   beat: number
@@ -48,14 +49,14 @@ export type USCDamageNote = BaseUSCNote & {
 export type USCConnectionStartNote = BaseUSCNote & {
   type: "start"
   critical: boolean
-  ease: "out" | "linear" | "in" | "inOut" | "outIn"
+  ease: "out" | "linear" | "in"
   judgeType: "normal" | "trace" | "none"
 }
 
 export type USCConnectionTickNote = BaseUSCNote & {
   type: "tick"
   critical?: boolean
-  ease: "out" | "linear" | "in" | "inOut" | "outIn"
+  ease: "out" | "linear" | "in"
 }
 
 export type USCConnectionAttachNote = Omit<BaseUSCObject, "timeScaleGroup"> & {
@@ -80,6 +81,7 @@ export type USCSlideNote = {
     USCConnectionEndNote,
   ]
 }
+
 export const USCColor = {
   neutral: 0,
   red: 1,
@@ -89,22 +91,34 @@ export const USCColor = {
   purple: 5,
   cyan: 6,
   black: 7,
-}
+} as const
+
 export type USCColor = keyof typeof USCColor
 
 export type USCGuideMidpointNote = BaseUSCNote & {
-  ease: "out" | "linear" | "in" | "inOut" | "outIn"
+  ease: "out" | "linear" | "in"
 }
 
 export const USCFade = {
   in: 2,
   out: 0,
   none: 1,
-}
+} as const
+
 export type USCFade = keyof typeof USCFade
+
 export type USCGuideNote = {
   type: "guide"
   color: USCColor
   fade: USCFade
   midpoints: USCGuideMidpointNote[]
+}
+
+// ここから追加
+export type USCStageGroup = {
+  type: "Stage"
+  changes: {
+    beat: number
+    Alpha: number
+  }[]
 }

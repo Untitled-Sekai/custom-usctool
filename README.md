@@ -8,12 +8,12 @@ This library provides 3 interfaces: JavaScript library, CLI tool, and DLL librar
 ### JavaScript Library
 
 ```bash
-npm install usctool
+npm install custom-usctool
 ```
 
 ### CLI Tool / DLL Library
 
-Check the [Releases](https://github.com/sevenc-nanashi/usctool/releases) page.
+Check the [Releases](https://github.com/Untitled-Sekai/custom-usctool/releases) page.
 
 ## License
 

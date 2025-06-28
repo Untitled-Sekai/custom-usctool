@@ -65,25 +65,45 @@ export function backward(data: USC2): USC1 {
       }
       case "guide": {
         const critical = object.color === "yellow"
-        const connections = [] as unknown as USCSlideNote["connections"]
+        let connections: USCSlideNote["connections"] = [] as unknown as USCSlideNote["connections"]
         let i = -1
         for (const midpoint of object.midpoints) {
           i++
-          connections.push({
-            type:
-              i === 0
-                ? "start"
-                : i === object.midpoints.length - 1
-                  ? "end"
-                  : "tick",
-            lane: midpoint.lane,
-            beat: midpoint.beat,
-            size: midpoint.size,
-            timeScaleGroup: midpoint.timeScaleGroup,
-            ease: midpoint.ease,
-            critical,
-            judgeType: "none",
-          })
+          const isStart = i === 0
+          const isEnd = i === object.midpoints.length - 1
+          
+          if (isStart) {
+            connections.push({
+              type: "start",
+              lane: midpoint.lane,
+              beat: midpoint.beat,
+              size: midpoint.size,
+              timeScaleGroup: midpoint.timeScaleGroup,
+              ease: midpoint.ease,
+              critical,
+              judgeType: "none",
+            })
+          } else if (isEnd) {
+            connections.push({
+              type: "end",
+              lane: midpoint.lane,
+              beat: midpoint.beat,
+              size: midpoint.size,
+              timeScaleGroup: midpoint.timeScaleGroup,
+              critical,
+              judgeType: "none",
+            })
+          } else {
+            connections.push({
+              type: "tick",
+              lane: midpoint.lane,
+              beat: midpoint.beat,
+              size: midpoint.size,
+              timeScaleGroup: midpoint.timeScaleGroup,
+              ease: midpoint.ease,
+              critical,
+            })
+          }
         }
 
         objects.push({
@@ -92,6 +112,9 @@ export function backward(data: USC2): USC1 {
           connections,
           critical,
         })
+        break
+      }
+      case "Stage": {
         break
       }
       default:

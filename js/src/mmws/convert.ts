@@ -16,9 +16,9 @@ const mmwsEaseToUSCEase = {
   linear: "linear",
   easeOut: "out",
   easeIn: "in",
-  easeInOut: "inOut",
-  easeOutIn: "outIn",
-} as const satisfies Record<EaseType, string>
+  easeInOut: "out",
+  easeOutIn: "in",
+} as const satisfies Record<EaseType, "linear" | "out" | "in">
 const ticksPerBeat = 480
 const laneToUSCLane = ({
   lane,

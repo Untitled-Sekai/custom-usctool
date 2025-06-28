@@ -1,8 +1,7 @@
 {
-  "name": "usctool",
-  "scope": "sevenc-nanashi",
+  "name": "custom-usctool",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.5",
   "description": "A tool for working with USCs",
   "scripts": {
     "test": "vitest",
@@ -19,8 +18,8 @@
   "types": "dist/index.d.ts",
   "keywords": [],
   "author": {
-    "name": "Nanashi.",
-    "url": "https://sevenc7c.com"
+    "name": "pim4n",
+    "url": "https://pim4n-net.com/"
   },
   "license": "MIT",
   "devDependencies": {
