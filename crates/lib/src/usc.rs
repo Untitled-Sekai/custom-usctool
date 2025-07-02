@@ -33,6 +33,7 @@ pub enum UscObject {
     Slide(UscSlideNote),
     Guide(UscGuideNote),
     Damage(UscDamageNote),
+    LaneEvent(UscLaneEvent), //レーンイベント
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -173,4 +174,15 @@ pub enum UscFade {
     In,
     Out,
     None,
+}
+
+// --- 追加 ---
+
+// レーンイベント 
+#[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UscLaneEvent {
+    pub beat: f64,
+    pub alpha: f64, // レーンの透明度
+    // pub rotation: f64, // レーンの回転角度  実装予定ではあるが、現時点では未使用
 }
